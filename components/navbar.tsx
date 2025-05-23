@@ -7,7 +7,6 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@heroui/navbar";
-
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
@@ -25,7 +24,13 @@ import {
 
 export const Navbar = () => {
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky" shouldHideOnScroll isBordered isBlurred={false}>
+    <HeroUINavbar
+      isBordered
+      shouldHideOnScroll
+      isBlurred={false}
+      maxWidth="xl"
+      position="sticky"
+    >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -41,11 +46,7 @@ export const Navbar = () => {
                   linkStyles({ color: "foreground" }),
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
-                color={
-                  index === 4
-                    ? "primary"
-                      : "foreground"
-                }
+                color={index === 4 ? "primary" : "foreground"}
                 href={item.href}
               >
                 {item.label}
@@ -59,7 +60,7 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex md:hidden gap-2">
+        <NavbarItem className="sm:flex md:hidden lg:flex gap-2">
           <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
             <TwitterIcon className="text-default-500" />
           </Link>
@@ -72,23 +73,23 @@ export const Navbar = () => {
           <Button
             isExternal
             as={Link}
-            className="text-sm font-normal text-default-600 bg-slate-800"
+            className="text-sm font-normal text-default-600 hidden md:flex lg:flex"
             href={siteConfig.links.sponsor}
             startContent={<HeartFilledIcon className="text-danger" />}
-            variant="shadow"
+            variant="ghost"
           >
-            Sponsor
+            Support
           </Button>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="lg:hidden basis-1 pl-4" justify="center">
         <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
-            <DiscordIcon className="text-default-500" />
-          </Link>
+          <TwitterIcon className="text-default-500" />
+        </Link>
+        <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
+          <DiscordIcon className="text-default-500" />
+        </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
@@ -96,20 +97,16 @@ export const Navbar = () => {
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
+            <NavbarMenuItem key={`${item}-${index}`} className=" w-full ">
               <Link
-                color={
-                  index === 4
-                    ? "primary"
-                      : "foreground"
-                }
+                className=" w-full "
+                color={index === 4 ? "primary" : "foreground"}
                 href="#"
                 size="lg"
               >
                 {item.label}
               </Link>
             </NavbarMenuItem>
-            
           ))}
         </div>
       </NavbarMenu>
