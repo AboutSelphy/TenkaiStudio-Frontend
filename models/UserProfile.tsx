@@ -2,7 +2,7 @@
 'use client'; // 👈 IMPORTANT in Next.js App Router
 
 import { useEffect, useState } from 'react';
-import { User } from '../types/User';
+import { User } from '@/types/user';
 
 export default function UserProfile() {
   const [user, setUser] = useState<User | null>(null);
