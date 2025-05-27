@@ -42,8 +42,6 @@ export const Navbar = () => {
   };
 
   const handleLogout = () => {
-    // Clear cookies by expiring them (adjust for your cookie names and path/domain)
-    document.cookie = "discord.sid; Max-Age=0; path=/;"; 
     // You might have other cookies to clear, e.g. session id
     document.cookie = "discord.sid=; Max-Age=0; path=/;";
 
