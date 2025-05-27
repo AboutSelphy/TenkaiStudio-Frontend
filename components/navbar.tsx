@@ -1,5 +1,7 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
+
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -25,9 +27,27 @@ import {
 } from "@/components/icons";
 
 export const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check for token cookie (replace 'token' with your actual cookie name)
+    const cookies = document.cookie.split(";").map(c => c.trim());
+    const hasToken = cookies.some(c => c.startsWith("token="));
+    setIsLoggedIn(hasToken);
+  }, []);
+
   const handleLogin = () => {
-    // ✅ Redirect to backend OAuth login route
     window.location.href = "https://api.tenkaistudio.com/auth/discord";
+  };
+
+  const handleLogout = () => {
+    // Clear cookies by expiring them (adjust for your cookie names and path/domain)
+    document.cookie = "token=; Max-Age=0; path=/;"; 
+    // You might have other cookies to clear, e.g. session id
+    document.cookie = "connect.sid=; Max-Age=0; path=/;";
+
+    // Optionally reload or redirect
+    window.location.href = "/";
   };
 
   return (
@@ -77,11 +97,26 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
 
-        {/* 🔐 Login Button */}
         <NavbarItem>
-          <Button onClick={handleLogin} variant="flat" color="primary" className="hidden lg:flex">
-            Login with Discord
-          </Button>
+          {isLoggedIn ? (
+            <Button
+              onClick={handleLogout}
+              variant="flat"
+              color="danger"
+              className="hidden lg:flex"
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button
+              onClick={handleLogin}
+              variant="flat"
+              color="primary"
+              className="hidden lg:flex"
+            >
+              Login with Discord
+            </Button>
+          )}
         </NavbarItem>
 
         <NavbarItem className="hidden md:flex md:justify-center">
@@ -124,11 +159,16 @@ export const Navbar = () => {
             </NavbarMenuItem>
           ))}
 
-          {/* Mobile Menu Login Option */}
           <NavbarMenuItem>
-            <Button onClick={handleLogin} color="primary" fullWidth>
-              Login with Discord
-            </Button>
+            {isLoggedIn ? (
+              <Button onClick={handleLogout} color="danger" fullWidth>
+                Logout
+              </Button>
+            ) : (
+              <Button onClick={handleLogin} color="primary" fullWidth>
+                Login with Discord
+              </Button>
+            )}
           </NavbarMenuItem>
         </div>
       </NavbarMenu>
