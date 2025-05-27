@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -29,26 +28,28 @@ import {
 export const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-useEffect(() => {
-  const checkCookie = () => {
-    const cookies = document.cookie.split(";").map((c) => c.trim());
-    const hasToken = cookies.some((c) => c.startsWith("discord.sid="));
-    setIsLoggedIn(hasToken);
-  };
-
-  checkCookie(); // initial check
-
-  const interval = setInterval(checkCookie, 1000); // check every 1s
-
-  return () => clearInterval(interval);
-}, []);
+  useEffect(() => {
+    async function checkSession() {
+      try {
+        const res = await fetch("/api/auth/session", {
+          credentials: "include", // send cookies
+        });
+        if (!res.ok) throw new Error("Not logged in");
+        const data = await res.json();
+        setIsLoggedIn(data.loggedIn);
+      } catch {
+        setIsLoggedIn(false);
+      }
+    }
+    checkSession();
+  }, []);
 
   const handleLogin = () => {
     window.location.href = "https://api.tenkaistudio.com/auth/discord";
   };
 
   const handleLogout = () => {
-    // Just redirect to backend logout route — backend clears cookies
+    // Just redirect to your backend logout route to clear cookies
     window.location.href = "https://api.tenkaistudio.com/auth/logout";
   };
 
