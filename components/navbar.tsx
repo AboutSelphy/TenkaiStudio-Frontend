@@ -55,7 +55,7 @@ const handleLogout = async () => {
       credentials: "include", // important to send cookies
     });
     setIsLoggedIn(false);
-    window.location.href = "/";
+    window.location.href = "https://tenkaistudio.com";
   } catch (error) {
     console.error("Logout failed", error);
   }
