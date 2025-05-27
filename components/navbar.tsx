@@ -60,7 +60,7 @@ export const Navbar = () => {
     setIsLoggedIn(false);
 
     // Optionally redirect after logout
-    window.location.href = '/';
+    window.location.href = 'https://tenkaistudio.com';
   } catch (error) {
     console.error('Logout failed:', error);
   }
