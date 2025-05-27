@@ -32,7 +32,7 @@ export const Navbar = () => {
   useEffect(() => {
     // Check for token cookie (replace 'token' with your actual cookie name)
     const cookies = document.cookie.split(";").map(c => c.trim());
-    const hasToken = cookies.some(c => c.startsWith("token="));
+    const hasToken = cookies.some(c => c.startsWith("discord.sid"));
     setIsLoggedIn(hasToken);
   }, []);
 
