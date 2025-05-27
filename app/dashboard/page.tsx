@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
 export default async function DashboardPage() {
-  const cookieStore = cookies(); // no await here
+  const cookieStore = await cookies();  // await here, because it's a Promise
 
   const sessionCookie = cookieStore.get('discord.sid');
   const cookieHeader = sessionCookie ? `${sessionCookie.name}=${sessionCookie.value}` : '';
@@ -10,7 +10,6 @@ export default async function DashboardPage() {
     headers: {
       Cookie: cookieHeader,
     },
-    // credentials: 'include', // no effect in Node.js fetch, safe to omit
     cache: 'no-store',
   });
 
