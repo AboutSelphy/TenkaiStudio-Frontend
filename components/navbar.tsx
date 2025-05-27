@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -23,6 +25,11 @@ import {
 } from "@/components/icons";
 
 export const Navbar = () => {
+  const handleLogin = () => {
+    // ✅ Redirect to backend OAuth login route
+    window.location.href = "https://api.tenkaistudio.com/auth/discord";
+  };
+
   return (
     <HeroUINavbar
       isBordered
@@ -44,7 +51,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color={index === 4 ? "primary" : "foreground"}
                 href={item.href}
@@ -69,6 +76,14 @@ export const Navbar = () => {
           </Link>
           <ThemeSwitch />
         </NavbarItem>
+
+        {/* 🔐 Login Button */}
+        <NavbarItem>
+          <Button onClick={handleLogin} variant="flat" color="primary" className="hidden lg:flex">
+            Login with Discord
+          </Button>
+        </NavbarItem>
+
         <NavbarItem className="hidden md:flex md:justify-center">
           <Button
             isExternal
@@ -97,17 +112,24 @@ export const Navbar = () => {
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`} className=" w-full ">
+            <NavbarMenuItem key={`${item}-${index}`} className="w-full">
               <Link
-                className=" w-full "
+                className="w-full"
                 color={index === 4 ? "primary" : "foreground"}
-                href="#"
+                href={item.href}
                 size="lg"
               >
                 {item.label}
               </Link>
             </NavbarMenuItem>
           ))}
+
+          {/* Mobile Menu Login Option */}
+          <NavbarMenuItem>
+            <Button onClick={handleLogin} color="primary" fullWidth>
+              Login with Discord
+            </Button>
+          </NavbarMenuItem>
         </div>
       </NavbarMenu>
     </HeroUINavbar>

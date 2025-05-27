@@ -20,10 +20,6 @@ export const siteConfig = {
       label: "Contact",
       href: "/contact",
     },
-    {
-      label: "Login with Discord",
-      href: "/login",
-    },
   ],
   navMenuItems: [
     {
