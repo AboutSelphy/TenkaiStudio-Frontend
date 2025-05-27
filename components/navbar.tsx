@@ -48,10 +48,24 @@ export const Navbar = () => {
     window.location.href = "https://api.tenkaistudio.com/auth/discord";
   };
 
-  const handleLogout = () => {
-    // Just redirect to your backend logout route to clear cookies
-    window.location.href = "https://api.tenkaistudio.com/auth/logout";
-  };
+  const handleLogout = async () => {
+  try {
+    // Call backend logout endpoint
+    await fetch('https://api.tenkaistudio.com/auth/logout', {
+      method: 'GET',
+      credentials: 'include',  // important to include cookies
+    });
+
+    // Update local state immediately so UI updates without waiting
+    setIsLoggedIn(false);
+
+    // Optionally redirect after logout
+    window.location.href = '/';
+  } catch (error) {
+    console.error('Logout failed:', error);
+  }
+};
+
 
   return (
     <HeroUINavbar
