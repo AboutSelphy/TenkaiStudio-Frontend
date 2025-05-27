@@ -50,14 +50,20 @@ export const Navbar = () => {
 
 const handleLogout = async () => {
   try {
-    await fetch("https://api.tenkaistudio.com/auth/logout", {
-      method: "GET",
-      credentials: "include", // important to send cookies
+    const res = await fetch('https://api.tenkaistudio.com/logout', {
+      method: 'GET',
+      credentials: 'include',
     });
-    setIsLoggedIn(false);
-    window.location.href = "https://tenkaistudio.com";
+
+    if (res.ok) {
+      // redirect client-side after successful logout
+      window.location.href = '/'; // landing page
+    } else {
+      console.error('Logout failed');
+      // handle error UI if needed
+    }
   } catch (error) {
-    console.error("Logout failed", error);
+    console.error('Logout error:', error);
   }
 };
 
