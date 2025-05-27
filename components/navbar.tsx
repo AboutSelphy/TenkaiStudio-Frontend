@@ -29,11 +29,19 @@ import {
 export const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
+  const checkCookie = () => {
     const cookies = document.cookie.split(";").map((c) => c.trim());
-    const hasToken = cookies.some((c) => c.startsWith("discord.sid"));
+    const hasToken = cookies.some((c) => c.startsWith("discord.sid="));
     setIsLoggedIn(hasToken);
-  }, []);
+  };
+
+  checkCookie(); // initial check
+
+  const interval = setInterval(checkCookie, 1000); // check every 1s
+
+  return () => clearInterval(interval);
+}, []);
 
   const handleLogin = () => {
     window.location.href = "https://api.tenkaistudio.com/auth/discord";
