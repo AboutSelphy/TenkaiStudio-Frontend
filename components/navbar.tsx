@@ -30,22 +30,17 @@ export const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-  const cookies = document.cookie.split(";").map(c => c.trim());
-  console.log("Cookies available:", cookies);
-  const hasToken = cookies.some(c => c.startsWith("discord.sid="));
-  setIsLoggedIn(hasToken);
-}, []);
-
+    const cookies = document.cookie.split(";").map((c) => c.trim());
+    const hasToken = cookies.some((c) => c.startsWith("discord.sid="));
+    setIsLoggedIn(hasToken);
+  }, []);
 
   const handleLogin = () => {
     window.location.href = "https://api.tenkaistudio.com/auth/discord";
   };
 
   const handleLogout = () => {
-    // You might have other cookies to clear, e.g. session id
-    document.cookie = "discord.sid=; Max-Age=0; path=/;";
-
-    // Optionally reload or redirect
+    // Just redirect to backend logout route — backend clears cookies
     window.location.href = "https://api.tenkaistudio.com/auth/logout";
   };
 
