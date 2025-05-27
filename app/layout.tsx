@@ -7,7 +7,7 @@ import { Providers } from "@/app/providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
-import { ConditionalNavbar } from "@/components/ConditionalNavbar";
+import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
   title: {
@@ -43,7 +43,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
-            <ConditionalNavbar />
+            <Navbar />
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow min-h-72">
               {children}
             </main>
