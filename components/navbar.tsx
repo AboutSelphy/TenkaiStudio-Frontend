@@ -50,7 +50,7 @@ export const Navbar = () => {
 
 const handleLogout = async () => {
   try {
-    const res = await fetch('https://api.tenkaistudio.com/logout', {
+    const res = await fetch('https://api.tenkaistudio.com/auth/logout', {
       method: 'GET',
       credentials: 'include',
     });
