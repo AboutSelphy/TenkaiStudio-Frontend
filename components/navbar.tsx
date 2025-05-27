@@ -42,12 +42,12 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     // Clear cookies by expiring them (adjust for your cookie names and path/domain)
-    document.cookie = "token=; Max-Age=0; path=/;"; 
+    document.cookie = "discord.sid; Max-Age=0; path=/;"; 
     // You might have other cookies to clear, e.g. session id
-    document.cookie = "connect.sid=; Max-Age=0; path=/;";
+    document.cookie = "discord.sid=; Max-Age=0; path=/;";
 
     // Optionally reload or redirect
-    window.location.href = "/";
+    window.location.href = "https://api.tenkaistudio.com/auth/logout";
   };
 
   return (
