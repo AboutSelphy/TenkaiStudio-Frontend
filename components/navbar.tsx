@@ -30,11 +30,12 @@ export const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Check for token cookie (replace 'token' with your actual cookie name)
-    const cookies = document.cookie.split(";").map(c => c.trim());
-    const hasToken = cookies.some(c => c.startsWith("discord.sid"));
-    setIsLoggedIn(hasToken);
-  }, []);
+  const cookies = document.cookie.split(";").map(c => c.trim());
+  console.log("Cookies available:", cookies);
+  const hasToken = cookies.some(c => c.startsWith("discord.sid="));
+  setIsLoggedIn(hasToken);
+}, []);
+
 
   const handleLogin = () => {
     window.location.href = "https://api.tenkaistudio.com/auth/discord";
