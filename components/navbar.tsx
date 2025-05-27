@@ -31,7 +31,7 @@ export const Navbar = () => {
 
   useEffect(() => {
     const cookies = document.cookie.split(";").map((c) => c.trim());
-    const hasToken = cookies.some((c) => c.startsWith("discord.sid="));
+    const hasToken = cookies.some((c) => c.startsWith("discord.sid"));
     setIsLoggedIn(hasToken);
   }, []);
 
