@@ -37,7 +37,7 @@ export default async function DashboardPage() {
     const parsed = JSON.parse(raw);
     user = parsed.user;
   } catch (err) {
-    console.error('Failed to parse JSON:', raw);
+    console.error('⚠️ Raw response from backend:', raw);
     return <div>❌ Failed to load user profile</div>;
   }
 
