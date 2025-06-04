@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   // Here you'd check if the cookie 'discord.sid' exists and is valid
   const cookie = req.headers.get("cookie") || "";
+
   if (!cookie.includes("discord.sid")) {
     return NextResponse.json({ loggedIn: false });
   }

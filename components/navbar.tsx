@@ -34,8 +34,10 @@ export const Navbar = () => {
         const res = await fetch("/api/auth/session", {
           credentials: "include", // send cookies
         });
+
         if (!res.ok) throw new Error("Not logged in");
         const data = await res.json();
+
         setIsLoggedIn(data.loggedIn);
       } catch {
         setIsLoggedIn(false);
@@ -48,25 +50,24 @@ export const Navbar = () => {
     window.location.href = "https://api.tenkaistudio.com/auth/discord";
   };
 
-const handleLogout = async () => {
-  try {
-    const res = await fetch('https://api.tenkaistudio.com/auth/logout', {
-      method: 'GET',
-      credentials: 'include',
-    });
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("https://api.tenkaistudio.com/auth/logout", {
+        method: "GET",
+        credentials: "include",
+      });
 
-    if (res.ok) {
-      // redirect client-side after successful logout
-      window.location.href = '/'; // landing page
-    } else {
-      console.error('Logout failed');
-      // handle error UI if needed
+      if (res.ok) {
+        // redirect client-side after successful logout
+        window.location.href = "/"; // landing page
+      } else {
+        console.error("Logout failed");
+        // handle error UI if needed
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
     }
-  } catch (error) {
-    console.error('Logout error:', error);
-  }
-};
-
+  };
 
   return (
     <HeroUINavbar
@@ -79,17 +80,30 @@ const handleLogout = async () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
+            <Logo className="text-gray-700 dark:text-gray-200" />
             <p className="font-bold text-inherit">Tenkai Studio</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
+          {isLoggedIn && (
+            <NavbarItem>
+              <NextLink
+                className={clsx(
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                )}
+                href="/dashboard"
+              >
+                Dashboard
+              </NextLink>
+            </NavbarItem>
+          )}
           {siteConfig.navItems.map((item, index) => (
             <NavbarItem key={`${item}-${index}`}>
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
                 color={index === 4 ? "primary" : "foreground"}
                 href={item.href}
@@ -118,19 +132,19 @@ const handleLogout = async () => {
         <NavbarItem>
           {isLoggedIn ? (
             <Button
-              onClick={handleLogout}
-              variant="flat"
-              color="danger"
               className="hidden lg:flex"
+              color="danger"
+              variant="flat"
+              onClick={handleLogout}
             >
               Logout
             </Button>
           ) : (
             <Button
-              onClick={handleLogin}
-              variant="flat"
-              color="primary"
               className="hidden lg:flex"
+              color="primary"
+              variant="flat"
+              onClick={handleLogin}
             >
               Login with Discord
             </Button>
@@ -164,6 +178,18 @@ const handleLogout = async () => {
 
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
+          {isLoggedIn && (
+            <NavbarMenuItem className="w-full">
+              <Link
+                className="w-full"
+                color="foreground"
+                href="/dashboard"
+                size="lg"
+              >
+                Dashboard
+              </Link>
+            </NavbarMenuItem>
+          )}
           {siteConfig.navItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`} className="w-full">
               <Link
@@ -179,11 +205,11 @@ const handleLogout = async () => {
 
           <NavbarMenuItem>
             {isLoggedIn ? (
-              <Button onClick={handleLogout} color="danger" fullWidth>
+              <Button fullWidth color="danger" onClick={handleLogout}>
                 Logout
               </Button>
             ) : (
-              <Button onClick={handleLogin} color="primary" fullWidth>
+              <Button fullWidth color="primary" onClick={handleLogin}>
                 Login with Discord
               </Button>
             )}
